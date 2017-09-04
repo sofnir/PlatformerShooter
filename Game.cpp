@@ -15,14 +15,8 @@ Game::~Game()
 	}
 }
 
-void Game::pushState(GameState* state)
-{
-	states.push(state);
-}
-
 void Game::popState()
 {
-	delete states.top();
 	states.pop();
 }
 
@@ -34,7 +28,7 @@ GameState* Game::peekState()
 	}
 	else
 	{
-		return states.top();
+		return states.top().get();
 	}
 }
 

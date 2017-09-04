@@ -1,7 +1,7 @@
 #pragma once
-#include "SFML\Graphics\Drawable.hpp"
-#include <SFML\Graphics\RenderTarget.hpp>
-#include "SFML\Graphics\Texture.hpp"
+#include "SFML/Graphics/Drawable.hpp"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include "SFML/Graphics/Texture.hpp"
 #include <fstream>
 #include <iostream>
 #include "Tile.h"

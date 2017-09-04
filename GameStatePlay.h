@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML\Window\Event.hpp>
+#include <SFML/Window/Event.hpp>
 #include "GameState.h"
 
 class GameStatePlay : public GameState

@@ -1,6 +1,6 @@
 #pragma once
-#include <SFML\Graphics\Text.hpp>
-#include <SFML\Graphics\RenderTarget.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 class TextButton : public sf::Drawable
 {

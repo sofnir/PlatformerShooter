@@ -9,7 +9,7 @@ GameStateMenu::GameStateMenu(Game* game)
 
 void GameStateMenu::playGame()
 {
-	game->pushState(new GameStatePlay(game));
+	game->pushState<GameStatePlay>(game);
 }
 
 void GameStateMenu::draw()

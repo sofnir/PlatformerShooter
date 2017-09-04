@@ -8,7 +8,7 @@ int main()
 	std::cout << "4. Press Esc - back to the menu state\n5. Green screen = menu state\n6. Press Esc - exit game";
 
 	Game game;
-	game.pushState(new GameStateMenu(& game));
+	game.pushState<GameStateMenu>(& game);	
 	game.gameLoop();
 
 	return 0;

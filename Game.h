@@ -1,7 +1,8 @@
 #pragma once
 #include <stack>
-#include <SFML\Graphics\RenderWindow.hpp>
-#include <SFML\Window\Mouse.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Mouse.hpp>
+#include <memory>
 
 class GameState;
 
@@ -15,12 +16,17 @@ public:
 	sf::Vector2f mousePosition;
 	sf::Clock clock;
 
-	void pushState(GameState* state);
+	template<typename T> 
+	void pushState(Game * game) 
+	{
+		states.push(std::make_unique<T>(game));
+	}
+	
 	void popState();
 	GameState* peekState();
 
 	void gameLoop();
 
-private:
-	std::stack<GameState*> states;
+private:	
+	std::stack<std::unique_ptr<GameState>> states;
 };
