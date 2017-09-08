@@ -13,7 +13,7 @@ TextButton::TextButton(const sf::String & string, const sf::Font & font, unsigne
 	;
 }
 
-void TextButton::draw(sf::RenderTarget & target, sf::RenderStates state) const
+void TextButton::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.draw(text);
 }

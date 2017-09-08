@@ -4,11 +4,11 @@
 class GameState
 {
 public:	
+	virtual ~GameState() = default;
+
 	virtual void draw() = 0;
 	virtual void update() = 0;
 	virtual void handleInput() = 0;
-
-	virtual ~GameState() = default;
 
 protected:
 	Game* game;

@@ -1,7 +1,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <iostream>
-#include "TextButton.h"
+#include "../TextButton.h"
 
 int main()
 {
