@@ -10,7 +10,6 @@ public:
 	Map();
 	
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
-
 	std::vector<sf::RectangleShape> getPlatforms() const;
 
 private:

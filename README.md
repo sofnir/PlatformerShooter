@@ -1,2 +1,0 @@
-# PlatformerShooter
-C++ SFML

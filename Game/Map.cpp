@@ -4,9 +4,10 @@ Map::Map()
 {
 	sf::RectangleShape platform(sf::Vector2f(200, 4));
 	platform.setOrigin(100, 2);
+	platform.setFillColor(Color::White);
 	platform.setPosition(150, 400);
 	platforms.push_back(platform);
-	platform.setPosition(300, 200);
+	platform.setPosition(300, 270);
 	platforms.push_back(platform);
 	platform.setPosition(300, 300);
 	platforms.push_back(platform);
@@ -16,6 +17,7 @@ Map::Map()
 	platforms.push_back(platform);
 	platform.setSize(sf::Vector2f(800, 4));
 	platform.setOrigin(400, 2);
+	platform.setFillColor(Color::White);
 	platform.setPosition(400, 500);
 	platforms.push_back(platform);
 }

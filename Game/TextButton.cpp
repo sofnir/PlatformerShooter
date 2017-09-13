@@ -26,7 +26,7 @@ void TextButton::update(const sf::Vector2f & mousePosition)
 
 		if (resizing)
 		{
-			text.setCharacterSize(basicCharacterSize * 1.2);
+			text.setCharacterSize((unsigned)(basicCharacterSize * 1.2));			
 			text.setOrigin(text.getGlobalBounds().width / 2, text.getGlobalBounds().height / 2);
 		}
 	}

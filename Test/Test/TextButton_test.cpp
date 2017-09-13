@@ -23,7 +23,7 @@ int main()
 	
 	while (window.isOpen())
 	{
-		sf::Vector2f mousePosition = sf::Vector2f(mouse.getPosition(window).x, mouse.getPosition(window).y);
+		sf::Vector2f mousePosition = sf::Vector2f((float)mouse.getPosition(window).x, (float)mouse.getPosition(window).y);
 		button.update(mousePosition);
 
 		sf::Event event;

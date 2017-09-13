@@ -6,7 +6,7 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Player - test");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Map - test");
 	window.setFramerateLimit(60);
 
 	Map map;
