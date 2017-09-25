@@ -1,9 +1,9 @@
 #include "Dialog.h"
 
-Dialog::Dialog(const Team & winningTeam)
+Dialog::Dialog(const Logic::LogicState & state)
 {
 	createShape();
-	createTexts(winningTeam);
+	createTexts(state);
 }
 
 void Dialog::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -26,15 +26,18 @@ void Dialog::createShape()
 	frame.setOutlineColor(Color::Blue);
 }
 
-void Dialog::createTexts(const Team & winningTeam)
+void Dialog::createTexts(const Logic::LogicState & state)
 {
-	switch (winningTeam)
+	switch (state)
 	{
-	case Team::FIRST:
+	case Logic::LogicState::FIRST_TEAM_WIN:
 		texts[0].setString("FIRST TEAM WIN");
 		break;
-	case Team::SECOND:
+	case Logic::LogicState::SECOND_TEAM_WIN:
 		texts[0].setString("SECOND TEAM WIN");
+		break;
+	case Logic::LogicState::DRAW:
+		texts[0].setString("DRAW");
 		break;
 	default:
 		break;

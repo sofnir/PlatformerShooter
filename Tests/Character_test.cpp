@@ -12,7 +12,7 @@ int main()
 	window.setFramerateLimit(60);
 
 	Data data;
-	sf::Clock clock;	
+	sf::Clock clock;
 	Collision collision;
 	Map map;
 
@@ -60,7 +60,7 @@ int main()
 		}
 
 		//drawing
-		window.clear(Color::Grey);
+		window.clear(Color::Blue);
 		window.draw(map);
 		
 		for (auto & projectile : projectiles)

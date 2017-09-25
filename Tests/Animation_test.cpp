@@ -11,15 +11,15 @@ int main()
 	window.setFramerateLimit(60);
 
 	Data data;
-
+		
 	sf::RectangleShape body;
-	body.setSize(sf::Vector2f(56.0f, 80.0f));
+	body.setSize(sf::Vector2f(56.0f, 80.0f));	
 	body.setOrigin(sf::Vector2f(body.getSize().x / 2, body.getSize().y / 2));
 	body.setPosition(window.getSize().x / 2, window.getSize().y / 2);
 	body.setTexture(&Data::playerTexture);
 	body.setTextureRect(sf::IntRect(0, 0, 56.0f, 80.0f));
 
-	Animation animation(body.getSize(), sf::Vector2u(3, 9), 0.15f);
+	Animation animation(body.getSize(), sf::Vector2u(3, 9), 0.2f);
 
 	int currentFrame = 0;	
 

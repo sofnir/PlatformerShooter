@@ -1,9 +1,10 @@
 #include "Character.h"
 
 Character::Character(const Team & team, CharecterController * controller, const RespawnParameters & respawn)
-	: animation(sf::Vector2f(56.0f, 80.0f), sf::Vector2u(1, 1), 100.0f)
+	: animation(sf::Vector2f(56.0f, 80.0f), sf::Vector2u(3, 1), 0.2f)
 {	
 	this->team = team;
+	currentLifes = startingLifes;
 	respawnParameters.position = respawn.position;
 	faceRight = respawnParameters.face = respawn.face;	
 	characterController = std::unique_ptr<CharecterController>(controller);
@@ -39,8 +40,8 @@ void Character::createBody()
 {
 	body.setSize(sf::Vector2f(56.0f, 80.0f));
 	body.setOrigin(sf::Vector2f(body.getSize().x / 2, body.getSize().y / 2));
-	body.setTexture(& Data::playerTexture);	
-	body.setTextureRect(sf::IntRect(0, 0, 56, 80));
+	body.setTexture(& Data::playerTexture);
+	body.setTextureRect(sf::IntRect(0, 0, 56.0f, 80.0f));	
 	body.setPosition(respawnParameters.position);
 	
 	switch (team)
@@ -68,7 +69,17 @@ void Character::updateAnimations()
 		faceRight = true;
 	}
 	
-	animation.update(0, faceRight);
+	int row;
+
+	
+	row = 0;
+	
+	if(velocity.x != 0 && onTheGround)
+	{
+		row = 1;
+	}
+
+	animation.update(row, faceRight);
 	body.setTextureRect(animation.getuvRect());
 }
 
@@ -113,13 +124,13 @@ void Character::initialForce(float force)
 
 int Character::getLifes() const
 {
-	return lifes;
+	return currentLifes;
 }
 
 void Character::reset(const sf::Vector2f & position, bool face)
 {
 	body.setPosition(position);
-	lifes = 3;
+	currentLifes = startingLifes;
 	jumpsCount = 0.0f;
 	kickVelocity = 0.0f;
 	velocity = sf::Vector2f(0, 0);
@@ -185,12 +196,17 @@ void Character::updateKick()
 }
 
 void Character::updateDead()
-{
-	if (velocity.y > 30.0f)
+{	
+	if (currentLifes > 0 && velocity.y > 30.0f)
 	{
-		lifes--;
-		body.setPosition(sf::Vector2f(respawnParameters.position));
-		faceRight = respawnParameters.face;
+		currentLifes--;
+
+		if (currentLifes > 0)
+		{
+			body.setPosition(sf::Vector2f(respawnParameters.position));
+			faceRight = respawnParameters.face;
+		}			
+
 		velocity.y = 0.0f;
 	}
 }

@@ -9,15 +9,31 @@ public:
 	enum class LogicState
 	{
 		PLAYING,
-		GAME_OVER
+		FIRST_TEAM_WIN,
+		SECOND_TEAM_WIN,
+		DRAW		
 	};
 	
-	void updateLogic(std::vector<Character> & players);
-	const LogicState & getCurrentState() const;
-	const Team & getWinner() const;
+	bool isAnyPlayerDead(std::vector<Character> & players) const;
+	void update(std::vector<Character> & players);
+	const LogicState & getCurrentState() const;	
 	void reset();
 
 private:
-	LogicState currentState;
-	Team winner;
+	LogicState currentState;	
 };
+
+//if anyone dead
+//{
+//	create timer;
+//}
+//
+//if timer end
+//{
+//	who is alive ?
+//	{
+//		noone - draw;
+//		somone - somone win;
+//	}
+//	delete timer;
+//}

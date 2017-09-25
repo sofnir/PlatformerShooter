@@ -5,23 +5,35 @@ Logic::Logic()
 	currentState = LogicState::PLAYING;
 }
 
-void Logic::updateLogic(std::vector<Character> & players)
+bool Logic::isAnyPlayerDead(std::vector<Character> & players) const
 {
 	for (auto & player : players)
 	{
 		if (player.getLifes() <= 0)
-		{
-			currentState = LogicState::GAME_OVER;
+		{						
+			return true;
+		}
+	}
 
+	return false;
+}
+
+void Logic::update(std::vector<Character> & players)
+{
+	currentState = LogicState::DRAW;
+
+	for (auto & player : players)
+	{
+		if (player.getLifes() > 0)
+		{			
 			if (player.getTeam() == Team::FIRST)
 			{
-				winner = Team::SECOND;
+				currentState = LogicState::FIRST_TEAM_WIN;
 			}
 			else
 			{
-				winner = Team::FIRST;
-			}
-			
+				currentState = LogicState::SECOND_TEAM_WIN;
+			}			
 		}
 	}
 }
@@ -29,11 +41,6 @@ void Logic::updateLogic(std::vector<Character> & players)
 const Logic::LogicState & Logic::getCurrentState() const
 {
 	return currentState;
-}
-
-const Team & Logic::getWinner() const
-{
-	return winner;
 }
 
 void Logic::reset()

@@ -15,7 +15,7 @@ Animation::Animation(const sf::Vector2f & frameSize, sf::Vector2u imageCount, fl
 void Animation::update(int row, bool faceRight)
 {
 	//set values
-	currentImage.y = row;	
+	currentImage.y = row;
 
 	//when it is time for change animation frame 
 	if (timer.getElapsedTime().asSeconds() >= switchTime)

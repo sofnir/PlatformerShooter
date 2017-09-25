@@ -33,6 +33,11 @@ void GameStatePlay::draw()
 		game->window.draw(*dialog);
 	}
 
+	if (timer)
+	{
+		game->window.draw(*timer);
+	}
+
 	game->window.display();
 }
 
@@ -53,11 +58,24 @@ void GameStatePlay::update(float dt)
 		playersGUI[i].setHp(players[i].getLifes());
 	}
 
-	logic.updateLogic(players);
-	
-	if (logic.getCurrentState() == Logic::LogicState::GAME_OVER && !dialog)
+	if (timer)
 	{
-		dialog = std::make_unique<Dialog>(logic.getWinner());
+		timer->update(dt);
+
+		if (timer->getCurrentTime() <= 0)
+		{
+			logic.update(players);
+			timer = nullptr;
+		}
+	} 
+	else if(logic.getCurrentState() == Logic::LogicState::PLAYING && logic.isAnyPlayerDead(players))
+	{				
+		timer = std::make_unique<Timer>();		
+	}
+			
+	if (logic.getCurrentState() != Logic::LogicState::PLAYING && !dialog)
+	{
+		dialog = std::make_unique<Dialog>(logic.getCurrentState());
 	}
 }
 
@@ -79,7 +97,7 @@ void GameStatePlay::handleInput()
 				return;
 			}
 			else if (event.key.code == sf::Keyboard::Space &&
-				logic.getCurrentState() == Logic::LogicState::GAME_OVER)
+				logic.getCurrentState() != Logic::LogicState::PLAYING)
 			{
 				logic.reset();				
 				players[0].reset(sf::Vector2f(100.0f, 50.0f), true);				

@@ -47,7 +47,8 @@ private:
 	float reloadTimer = 0.0f;
 	bool faceRight;
 	bool onTheGround = false;
-	unsigned lifes = 3;
+	unsigned startingLifes = 3;
+	unsigned currentLifes;
 	RespawnParameters respawnParameters;
 	
 	std::unique_ptr<CharecterController> characterController;
