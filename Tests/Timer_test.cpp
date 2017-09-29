@@ -1,6 +1,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <iostream>
+#include <memory>
 #include "../Timer.h"
 
 int main()
@@ -8,7 +9,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(Config::windowSize.x, Config::windowSize.y), "Timer- test");
 
 	Data data;
-	Timer timer;
+	std::unique_ptr<Timer> timer = std::make_unique<Timer>();
 
 	sf::Clock clock;
 
@@ -25,10 +26,23 @@ int main()
 			}
 		}
 
-		timer.update(dt);
+		if (timer)
+		{
+			timer->update(dt);
+
+			if (timer->getCurrentTime() <= 0)
+			{
+				timer = nullptr;
+			}
+		}				
 
 		window.clear();
-		window.draw(timer);
+
+		if (timer)
+		{
+			window.draw(*timer);
+		}
+		
 		window.display();
 	}
 	return 0;

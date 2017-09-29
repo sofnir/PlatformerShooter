@@ -26,7 +26,7 @@ void GameStatePlay::draw()
 			game->window.draw(players[i]);
 			game->window.draw(playersGUI[i]);
 		}
-	}	
+	}
 
 	if (dialog)
 	{
@@ -58,24 +58,11 @@ void GameStatePlay::update(float dt)
 		playersGUI[i].setHp(players[i].getLifes());
 	}
 
-	if (timer)
-	{
-		timer->update(dt);
-
-		if (timer->getCurrentTime() <= 0)
-		{
-			logic.update(players);
-			timer = nullptr;
-		}
-	} 
-	else if(logic.getCurrentState() == Logic::LogicState::PLAYING && logic.isAnyPlayerDead(players))
-	{				
-		timer = std::make_unique<Timer>();		
-	}
-			
+	updateGameLogic(dt);
+				
 	if (logic.getCurrentState() != Logic::LogicState::PLAYING && !dialog)
 	{
-		dialog = std::make_unique<Dialog>(logic.getCurrentState());
+		createDialog();
 	}
 }
 
@@ -100,8 +87,8 @@ void GameStatePlay::handleInput()
 				logic.getCurrentState() != Logic::LogicState::PLAYING)
 			{
 				logic.reset();				
-				players[0].reset(sf::Vector2f(100.0f, 50.0f), true);				
-				players[1].reset(sf::Vector2f(700.0f, 100.0f), false);
+				players[0].reset();				
+				players[1].reset();
 				dialog = nullptr;
 			}				
 			break;		
@@ -134,4 +121,46 @@ void GameStatePlay::createGui()
 	playersGUI.push_back(CharacterGUI("Second player"));
 	playersGUI[1].setPosition(sf::Vector2f(Config::windowSize.x * 5 / 6, Config::windowSize.y - 50.0f));
 	playersGUI[1].setHp(players[1].getLifes());
+}
+
+void GameStatePlay::createDialog()
+{
+	std::string text;
+
+	switch (logic.getCurrentState())
+	{
+	case Logic::LogicState::FIRST_TEAM_WIN:
+		text = "FIRST TEAM WIN";
+		break;
+	case Logic::LogicState::SECOND_TEAM_WIN:
+		text = "SECOND TEAM WIN";
+		break;
+	case Logic::LogicState::DRAW:
+		text = "DRAW";
+		break;
+	default:
+		break;
+	}
+
+	dialog = std::make_unique<Dialog>(text);
+}
+
+void GameStatePlay::updateGameLogic(float dt)
+{
+	/* when anyone dead, count down the time, when time is over check if anyone is alive,
+	if allive is anyone he is a winner if noone it is draw */
+	if (timer)
+	{
+		timer->update(dt);
+
+		if (timer->getCurrentTime() <= 0)
+		{
+			logic.update(players);
+			timer = nullptr;
+		}
+	}
+	else if (logic.getCurrentState() == Logic::LogicState::PLAYING && logic.isAnyPlayerDead(players))
+	{
+		timer = std::make_unique<Timer>();
+	}
 }

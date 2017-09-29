@@ -1,9 +1,9 @@
 #include "Dialog.h"
 
-Dialog::Dialog(const Logic::LogicState & state)
+Dialog::Dialog(const std::string & text)
 {
 	createShape();
-	createTexts(state);
+	createTexts(text);
 }
 
 void Dialog::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -26,23 +26,9 @@ void Dialog::createShape()
 	frame.setOutlineColor(Color::Blue);
 }
 
-void Dialog::createTexts(const Logic::LogicState & state)
+void Dialog::createTexts(const std::string & text)
 {
-	switch (state)
-	{
-	case Logic::LogicState::FIRST_TEAM_WIN:
-		texts[0].setString("FIRST TEAM WIN");
-		break;
-	case Logic::LogicState::SECOND_TEAM_WIN:
-		texts[0].setString("SECOND TEAM WIN");
-		break;
-	case Logic::LogicState::DRAW:
-		texts[0].setString("DRAW");
-		break;
-	default:
-		break;
-	}	
-	
+	texts[0].setString(text);
 	texts[0].setFillColor(Color::Orange);
 	texts[0].setCharacterSize(45);
 	texts[0].setFont(Data::font);

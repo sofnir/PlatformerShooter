@@ -19,11 +19,11 @@ int main()
 	std::vector<Projectile> projectiles;
 	std::vector<Character> players;
 
-	players.push_back(Character(Team::FIRST, new KeyboardController(KeyboardController::Keys::ARROWS), {sf::Vector2f(100, 300), false}));
+	players.push_back(Character(Team::FIRST, new KeyboardController(KeyboardController::Keys::ARROWS), {sf::Vector2f(100, 300), true}));
 	
 	while (window.isOpen())
 	{
-		float dt = clock.restart().asSeconds();		
+		float dt = clock.restart().asSeconds();
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -60,7 +60,7 @@ int main()
 		}
 
 		//drawing
-		window.clear(Color::Blue);
+		window.clear(Color::Grey);
 		window.draw(map);
 		
 		for (auto & projectile : projectiles)

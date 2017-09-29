@@ -11,21 +11,31 @@ int main()
 	window.setFramerateLimit(60);
 
 	Data data;
+
+	sf::Texture texture;
+	texture.loadFromFile("Data/player.png");
 		
 	sf::RectangleShape body;
-	body.setSize(sf::Vector2f(56.0f, 80.0f));	
+	body.setSize(sf::Vector2f(32.0f, 32.0f));	
 	body.setOrigin(sf::Vector2f(body.getSize().x / 2, body.getSize().y / 2));
 	body.setPosition(window.getSize().x / 2, window.getSize().y / 2);
-	body.setTexture(&Data::playerTexture);
-	body.setTextureRect(sf::IntRect(0, 0, 56.0f, 80.0f));
+	body.setTexture(&texture);
+	body.setTextureRect(sf::IntRect(0, 0, 32, 32));
+	body.setScale(sf::Vector2f(3, 3));
 
-	Animation animation(body.getSize(), sf::Vector2u(3, 9), 0.2f);
+	Animation animation(body.getSize(), 0.1f);
+	animation.createAnimation("Iddle", 0, 5);
+	animation.createAnimation("Run", 1, 10);
+	animation.createAnimation("Jump", 2, 9);
 
-	int currentFrame = 0;	
+	std::cout << "Press NUM1 - set basic animation\n";
+	std::cout << "Press NUM2 - set iddle animation\n";
+	std::cout << "Press NUM3 - set run animation\n";
+	std::cout << "Press NUM3 - set jump animation\n";
 
 	while (window.isOpen())
 	{	
-		animation.update(currentFrame, true);
+		animation.update(true);
 		body.setTextureRect(animation.getuvRect());
 
 		sf::Event event;
@@ -36,20 +46,23 @@ int main()
 				window.close();
 			}
 			if (event.type == sf::Event::KeyPressed)
-			{
+			{				
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Escape: 
 					window.close();
 					break;
 				case sf::Keyboard::Num1:
-					currentFrame = 0;
+					animation.setCurrentAnimation("Basic");
 					break;				
 				case sf::Keyboard::Num2:
-					currentFrame = 1;
+					animation.setCurrentAnimation("Iddle");
 					break;
 				case sf::Keyboard::Num3:
-					currentFrame = 8;
+					animation.setCurrentAnimation("Run");					
+					break;
+				case sf::Keyboard::Num4:
+					animation.setCurrentAnimation("Jump");
 					break;
 				default:
 					break;

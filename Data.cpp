@@ -6,5 +6,5 @@ sf::Texture Data::playerTexture;
 Data::Data()
 {
 	font.loadFromFile("Data/font.ttf");	
-	playerTexture.loadFromFile("Data/tux.png");
+	playerTexture.loadFromFile("Data/player.png");
 }

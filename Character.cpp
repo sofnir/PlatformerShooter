@@ -1,14 +1,16 @@
 #include "Character.h"
 
 Character::Character(const Team & team, CharecterController * controller, const RespawnParameters & respawn)
-	: animation(sf::Vector2f(56.0f, 80.0f), sf::Vector2u(3, 1), 0.2f)
+	: animation(sf::Vector2f(32, 32), 0.1)
 {	
 	this->team = team;
+	characterController = std::unique_ptr<CharecterController>(controller);
 	currentLifes = startingLifes;
 	respawnParameters.position = respawn.position;
-	faceRight = respawnParameters.face = respawn.face;	
-	characterController = std::unique_ptr<CharecterController>(controller);
+	faceRight = respawnParameters.face = respawn.face;		
+
 	createBody();
+	createAnimations();
 }
 
 void Character::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -38,24 +40,17 @@ void Character::update(float dt)
 
 void Character::createBody()
 {
-	body.setSize(sf::Vector2f(56.0f, 80.0f));
+	body.setSize(sf::Vector2f(96, 96));
 	body.setOrigin(sf::Vector2f(body.getSize().x / 2, body.getSize().y / 2));
 	body.setTexture(& Data::playerTexture);
-	body.setTextureRect(sf::IntRect(0, 0, 56.0f, 80.0f));	
-	body.setPosition(respawnParameters.position);
-	
-	switch (team)
-	{
-	case Team::FIRST:
-		body.setFillColor(Color::Blue);
-		break;
-	case Team::SECOND:
-		body.setFillColor(Color::Green);
-		break;
-	default:
-		body.setFillColor(Color::White);
-		break;
-	}
+	body.setPosition(respawnParameters.position);	
+}
+
+void Character::createAnimations()
+{
+	animation.createAnimation("Iddle", 0, 5);
+	animation.createAnimation("Run", 1, 10);
+	animation.createAnimation("Jump", 2, 9);
 }
 
 void Character::updateAnimations()
@@ -68,18 +63,21 @@ void Character::updateAnimations()
 	{
 		faceRight = true;
 	}
-	
-	int row;
 
-	
-	row = 0;
-	
 	if(velocity.x != 0 && onTheGround)
 	{
-		row = 1;
+		animation.setCurrentAnimation("Run");
+	}
+	else if (velocity.x == 0 && onTheGround)
+	{
+		animation.setCurrentAnimation("Iddle");
+	}
+	else if (!onTheGround)
+	{
+		animation.setCurrentAnimation("Basic");
 	}
 
-	animation.update(row, faceRight);
+	animation.update(faceRight);
 	body.setTextureRect(animation.getuvRect());
 }
 
@@ -127,14 +125,14 @@ int Character::getLifes() const
 	return currentLifes;
 }
 
-void Character::reset(const sf::Vector2f & position, bool face)
+void Character::reset()
 {
-	body.setPosition(position);
+	body.setPosition(respawnParameters.position);
+	faceRight = respawnParameters.face;
 	currentLifes = startingLifes;
 	jumpsCount = 0.0f;
 	kickVelocity = 0.0f;
-	velocity = sf::Vector2f(0, 0);
-	faceRight = face;
+	velocity = sf::Vector2f(0, 0);	
 	onTheGround = false;
 }
 

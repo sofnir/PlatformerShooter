@@ -3,13 +3,12 @@
 #include <SFML\Graphics\RectangleShape.hpp>
 #include <SFML\Graphics\RenderTarget.hpp>
 #include "Data.h"
-#include "Logic.h"
 
 class Dialog : public sf::Drawable
 {
 public:
 
-	Dialog(const Logic::LogicState & state);
+	Dialog(const std::string & text);
 
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
@@ -19,5 +18,5 @@ private:
 	sf::Text texts[3];
 
 	void createShape();
-	void createTexts(const Logic::LogicState & state);
+	void createTexts(const std::string & text);
 };

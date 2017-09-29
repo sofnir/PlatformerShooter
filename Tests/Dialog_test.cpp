@@ -13,6 +13,7 @@ int main()
 
 	std::cout << "Press NUM1 - create first dialog\n";
 	std::cout << "Press NUM2 - create second dialog\n";
+	std::cout << "Press NUM3 - create third dialog\n";
 
 	while (window.isOpen())
 	{
@@ -25,11 +26,15 @@ int main()
 			}
 			else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num1)
 			{
-				dialog = std::make_unique<Dialog>(Team::FIRST);
+				dialog = std::make_unique<Dialog>("FIRST TEAM WIN");
 			}
 			else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num2)
 			{
-				dialog = std::make_unique<Dialog>(Team::SECOND);
+				dialog = std::make_unique<Dialog>("SECOND TEAM WIN");
+			}
+			else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num3)
+			{
+				dialog = std::make_unique<Dialog>("DRAW");
 			}
 		}
 

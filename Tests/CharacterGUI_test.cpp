@@ -9,6 +9,7 @@ int main()
 
 	Data data;
 	CharacterGUI firstPlayerGUI("First player");
+	firstPlayerGUI.setPosition(sf::Vector2f(200, 150));
 	firstPlayerGUI.setHp(5);
 
 	while (window.isOpen())

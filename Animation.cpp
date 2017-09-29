@@ -1,9 +1,11 @@
 #include "Animation.h"
 
-Animation::Animation(const sf::Vector2f & frameSize, sf::Vector2u imageCount, float switchTime)
+Animation::Animation(const sf::Vector2f & frameSize, float switchTime)
 {
+	animations["Basic"] = { 0, 1 };
+	curretnAnimation = "Basic";
+
 	//set values
-	this->imageCount = imageCount;
 	this->switchTime = switchTime;
 	timer.restart();
 	currentImage.x = 0;
@@ -12,10 +14,10 @@ Animation::Animation(const sf::Vector2f & frameSize, sf::Vector2u imageCount, fl
 	uvRect.height = frameSize.y;
 }
 
-void Animation::update(int row, bool faceRight)
+void Animation::update(bool faceRight)
 {
 	//set values
-	currentImage.y = row;
+	currentImage.y = animations[curretnAnimation].row;
 
 	//when it is time for change animation frame 
 	if (timer.getElapsedTime().asSeconds() >= switchTime)
@@ -25,7 +27,7 @@ void Animation::update(int row, bool faceRight)
 		currentImage.x++;
 
 		//when current frame is the last start over again 
-		if (currentImage.x >= imageCount.x)
+		if (currentImage.x >= animations[curretnAnimation].totalFrames)
 		{
 			currentImage.x = 0;
 		}			
@@ -47,4 +49,17 @@ void Animation::update(int row, bool faceRight)
 		uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
 		uvRect.width = -abs(uvRect.width);
 	}
+}
+
+void Animation::createAnimation(const std::string & name, int row, int frames)
+{
+	animations[name] = {row, frames};
+}
+
+void Animation::setCurrentAnimation(const std::string & name)
+{
+	if (curretnAnimation != name)
+	{
+		curretnAnimation = name;
+	}	
 }

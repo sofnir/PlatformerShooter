@@ -18,7 +18,7 @@ public:
 		bool face;
 	};
 
-	Character(const Team & team, CharecterController * controller, const RespawnParameters & respawn);		
+	Character(const Team & team, CharecterController * controller, const RespawnParameters & respawn);
 
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 	void updateController(sf::Event & event);
@@ -31,7 +31,7 @@ public:
 	const Team & getTeam() const;
 	void initialForce(float force);
 	int getLifes() const;
-	void reset(const sf::Vector2f & position, bool face);
+	void reset();
 
 private:
 	Team team;
@@ -47,7 +47,7 @@ private:
 	float reloadTimer = 0.0f;
 	bool faceRight;
 	bool onTheGround = false;
-	unsigned startingLifes = 3;
+	unsigned startingLifes = 2;
 	unsigned currentLifes;
 	RespawnParameters respawnParameters;
 	
@@ -56,6 +56,7 @@ private:
 	Animation animation;
 
 	void createBody();
+	void createAnimations();
 	void updateAnimations();
 	void updateMove();
 	void updateJump();

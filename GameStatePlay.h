@@ -30,4 +30,6 @@ private:
 
 	void createPlayers();
 	void createGui();
+	void createDialog();
+	void updateGameLogic(float dt);
 };
